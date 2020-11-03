@@ -3,6 +3,9 @@ print(lst)
 for i in lst:
     print(f"{i} : {hash(i)}")
 
-lst2 = ["A", "A"]
-for i in lst2:
+for i in ["A", "A"]:
+    print(f"{i} : {hash(i)}")       # 같은 값은 같은 해시값
+
+for i in ['Ab', 'AB', "Ac"]:
     print(f"{i} : {hash(i)}")
+
