@@ -9,7 +9,7 @@ def solution(scoville, K):
         if len(scoville) < 2:
             return -1
         first, second = heapq.heappop(scoville), heapq.heappop(scoville) * 2
-        if first == second == 0:
+        if first == second == 0:      # 이 if 문 부분이 없어도, len(scoville) < 2 에서 걸러지긴 한다.
             return -1
         heapq.heappush(scoville, first + second)
     return answer
