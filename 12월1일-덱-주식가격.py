@@ -23,4 +23,26 @@ def solution(p):      # 나의 기존 로직보다 무려 4배나 더 효율이 
     return ans
 
 
+from collections import deque
+
+
+def solution_use_deque(prices):       # Deque(덱) 을 사용한 풀이
+    answer = []
+    prices = deque(prices)
+    while prices:
+        c = prices.popleft()
+
+        count = 0
+        for i in prices:
+            if c > i:
+                count += 1
+                break
+            count += 1
+
+        answer.append(count)
+
+    return answer
+
+
 print(solution([1, 2, 3, 2, 3]))
+print(solution_use_deque([1, 2, 3, 2, 3]))
