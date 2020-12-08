@@ -1,4 +1,7 @@
 import time
+import sys
+
+sys.setrecursionlimit(10000)    # 재귀 제한 1000 -> 10000으로 증가
 """
 메모리제이션(memoization)
 = 컴퓨터 프로그램이 동일한 계산을 반복해야 할 때, 이전에 계산한 값을 메모리에 저장함으로써 
@@ -15,9 +18,9 @@ def common_fibonacci(i):
 
 
 start = time.time()
-print(common_fibonacci(n))
+print(common_fibonacci(n), end=', ')
 end = time.time()
-print(end - start)
+print(end - start, "초 걸림")
 
 
 # 2. Top Down = 가장 큰 문제들부터 작은 문제들을 호출하여 답을 찾는 방식 (재귀함수에 메모리제이션을 추가해 구현)
@@ -30,9 +33,9 @@ def top_down_fibonacci(i):
 
 li = [1, 1]
 start = time.time()
-print(top_down_fibonacci(n))
+print(top_down_fibonacci(n), end=', ')
 end = time.time()
-print(end - start)
+print(end - start, "초 걸림")
 
 
 # 3. Bottom Up = 가장 작은 문제들부터 전체 문제까지로 답을 찾는 방식 (반복문으로 구현)
@@ -44,6 +47,6 @@ def bottom_up_fibonacci(i):
 
 
 start = time.time()
-print(bottom_up_fibonacci(n))
+print(bottom_up_fibonacci(n), end=', ')
 end = time.time()
-print(end - start)
+print(end - start, "초 걸림")
