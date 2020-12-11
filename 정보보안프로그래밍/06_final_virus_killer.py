@@ -1,5 +1,6 @@
 import os
 from pandas import read_csv
+import socket
 
 
 def check_file(file_path: str, scan_all: bool):
@@ -16,24 +17,15 @@ def check_file(file_path: str, scan_all: bool):
                 break
 
 
-def check_folder(folder_path: str, recursive: bool):
-    for file in os.scandir(folder_path):
-        if file.is_file():
-            check_file(os.path.join(folder_path, file.name), scan_all=True)
-        elif file.is_dir():
-            check_folder(file.path, recursive)
+def read_file_from_socket():
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client_socket.connect(('127.0.0.1', 6789))
+    msg = client_socket.recv(1024)    # recv(읽어올 바이트수)
+    print(msg)
 
 
 def virus_killer():
-    print("바이러스의 숙청이 다가옵니다...")
-    mode = int(input("숙청 모드를 선택하세요 (1= 파일 특정 위치, 2= 파일 전체, 3= 폴더 전체) : "))
-
-    if mode in [1, 2]:
-        check_file(input("검색할 파일를 경로를 함께 입력하세요 : "),
-                   scan_all=(mode is 2))
-    else:
-        check_folder(input("검색할 폴더를 경로를 함께 입력하세요 : "),
-                     recursive=input("폴더 안의 파일을 재귀적으로 검사할까요 (y/n)? ") in ['Y', 'y', 'Yes', 'yes', 'YES'])
+    pass
 
 
 def read_csv_to_dict(csv_name: str):
@@ -44,3 +36,4 @@ def read_csv_to_dict(csv_name: str):
 if __name__ == '__main__':
     virus_dict = read_csv_to_dict("virus_db")
     # virus_killer()
+    read_file_from_socket()
