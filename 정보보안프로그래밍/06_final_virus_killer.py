@@ -3,29 +3,32 @@ from pandas import read_csv
 import socket
 
 
-def check_file(file_path: str, scan_all: bool):
-    scan_index = 0 if scan_all else int(input("검색할 시작 위치(인덱스)를 입력하세요 : "))
-    with open(file_path, "r", encoding="utf-8") as file:
-        target = file.read()
-        for virus in virus_dict.values():
-            out_index = target.find(virus, scan_index)
-            if out_index is not -1:
-                file.close()
-                os.remove(file_path)
-                print(f"파일명 : {file_path} \n바이러스명 : {virus} \n발견된 인덱스 : {out_index} \n",
-                      "감염된 파일을 삭제하였습니다.", sep="")
-                break
+def check_file(file_content: str):
+    for id, virus in virus_dict.items():
+        if virus in file_content:
+            print(f"[!] 바이러스가 검출되었습니다!", f"파일 내용 : {file_content}", f"검출된 바이러스 명 : {id}", sep="\n")
+            return 1
+    print(f"[?] 바이러스가 검출되지 않았습니다!")
+    return 0
 
 
 def read_file_from_socket():
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect(('127.0.0.1', 6789))
     msg = client_socket.recv(1024)    # recv(읽어올 바이트수)
-    print(msg)
+    if msg.decode("utf-8") == "연결 잘했어용 *^^*":
+        client_socket.send("바이러스 파일 내놔".encode('utf-8'))
+        file_content = client_socket.recv(2048)
+        return file_content.decode('utf-8')
+    else:
+        print("[!] 연결에 실패했습니다 ㅃㅃ...")
+        return -1
 
 
 def virus_killer():
-    pass
+    content = read_file_from_socket()
+    print(content)
+    check_file(content)
 
 
 def read_csv_to_dict(csv_name: str):
@@ -35,5 +38,4 @@ def read_csv_to_dict(csv_name: str):
 
 if __name__ == '__main__':
     virus_dict = read_csv_to_dict("virus_db")
-    # virus_killer()
-    read_file_from_socket()
+    virus_killer()
