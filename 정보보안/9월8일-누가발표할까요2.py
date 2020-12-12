@@ -12,7 +12,7 @@ lst += sub_lst  # 이렇게 되면 lst는 겹침을 최소화한 하나의 가�
 
 pre_list = [['']] * student_count
 print(pre_list[0])
-with open('list.txt', 'r+') as f:
+with open('../list.txt', 'r+') as f:
     for line in f.readlines():
         print(line[:-1].split(','))
         for i, n in enumerate(line[:-1].split(',')):
@@ -24,5 +24,5 @@ print(pre_list)
 #     hey = random.choice(lst)
 #     if hey in
 
-with open('list.txt', 'a') as f:
+with open('../list.txt', 'a') as f:
     f.write(','.join(lst)+'\n')
